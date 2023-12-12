@@ -4,12 +4,18 @@ import '/src/styles/TravelList.css';
 
 function TravelList() {
     const [travelPlans, setTravelPlans] = useState(travelPlansData);
+    const handleDelete = (id) => {
+        const updatedPlans = travelPlans.filter((plan) => plan.id !== id);
+        setTravelPlans(updatedPlans);
+    };
     return (
         <div>
             <ul>
                 {travelPlans.map((plan) => (
                     <li key={plan.id} className='travel-plan-item'>
-                        <img src={plan.image} alt={plan.destination} />
+                        <div className='images-wrapper'>
+                            <img src={plan.image} alt={plan.destination} />
+                        </div>
                         <div className='textPart'>
                             <h3>
                                 {plan.destination} {`(${plan.days} Days)`}
@@ -20,6 +26,11 @@ function TravelList() {
                                 {plan.totalCost}
                             </p>
                             {renderLabels(plan)}
+                            <div className='Delete-button'>
+                                <button onClick={() => handleDelete(plan.id)}>
+                                    Delete
+                                </button>
+                            </div>
                         </div>
                     </li>
                 ))}
